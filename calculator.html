@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <!-- link to bootstrap css file -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        input[type="text"]{
+            text-align: right;
+            font-size: x-large;
+        }
+    </style>
+	<script src="jquery.js"></script>
+</head>
+<body>
+<!-- container -->
+  <div class="container  border border-1 w-25 mt-5 mx-auto p-5 bg-light shadow-lg rounded-4" id="boxDiv">
+            <input type="text" placeholder="0" class="shadow-none fw-bold form-control w-100 mx-auto mb-1 bg-warning py-2" id="output">
+            <div class="row  p-4 text-center gy-3">
+                <button value="9" class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">9</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">8</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">7</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 sign" >+</button>
+
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">6</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">5</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">4</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 sign" >-</button>
+
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">3</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">2</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 nbr">1</button>
+                <button class="col-sm-3  border border-1 btn rounded-circle p-3 sign" >*</button>
+
+              
+                <table>
+                     
+                    <tr>
+                        <td class=""><button class="btn border border-1 btn rounded-circle p-3 w-100 text-center nbr">0</button></td>
+                        <td class=""><button class="btn border border-1 btn rounded-circle p-3 w-100 text-center nbr">.</button></td>
+                        <td class=""><button class="btn border border-1 btn rounded-circle p-3 w-100 text-center" id="del">Del</button></td>
+                        <!-- This cell will take up space on
+                            two rows -->
+                        <td><button class="btn border border-1 h-5 p-3 bg-warning fw-bol" style="font-size:40px;" id="eq"> =</button></td>
+                         </tr>
+                    <tr>
+                        <td><button class="btn border border-1 btn rounded-circle p-3 w-100 text-center nbr">00</button></td>
+                        <td class=""><button class="btn border border-1 btn rounded-circle p-3 w-100 text-center sign" > %</button></td>
+                        <td class=""><button class="btn border border-1 btn rounded-circle p-3 w-100 text-center sign" >/</button></td>
+<td><button class="btn border border-1 h-5 bg-danger fw-bol" style="font-size:30px;" id="cancel"> Clr</button></td>
+                   
+                    </tr>
+                </table>
+ 
+               
+ 
+                
+
+               
+
+            </div>
+  </div>
+   
+<link rel="stylesheet" href="js/bootstrap.js">
+<script type="text/javaScript">
+$(function(){
+var output ='';
+$('#boxDiv').on('click', '.nbr', function(){
+var value= $(this).text();
+<!-- alert(value); -->
+output = output+''+value;
+$('#output').val(output);
+});
+<!-- ------------------------------------------------- -->
+//            delete a character 
+<!-- ------------------------------------------------- -->
+$('#del').click(function(){
+output = $('#output').val();
+output = output.substr(0, (output.length -1));
+$('#output').val(output);
+});
+
+<!-- ------------------------------------------------- -->
+//            clear result screen
+<!-- ------------------------------------------------- -->
+$('#cancel').click(function(){
+$('#output').val('');
+output='';
+});
+
+var nbr1 = '';
+var nbr2 = '';
+<!-- ------------------------------------------------- -->
+//					operator 
+<!-- ------------------------------------------------- -->
+var operation ='';
+$('#boxDiv').on('click', '.sign', function(){
+var op = $(this).text();
+nbr1 =  parseFloat($('#output').val());
+<!-- alert(nbr1); -->
+output = output+op;
+operation = op;
+$('#output').val(output);
+});
+
+<!-- ------------------------------------------------- -->
+//				equal button
+<!-- ------------------------------------------------- -->
+$('#eq').click(function(){
+output =  $('#output').val();
+var operands = output.split(operation);
+nbr2 =operands[1];
+if (operation =='+'){
+add(nbr1, nbr2);
+}else if (operation =='-'){
+sub(nbr1, nbr2);
+}else if (operation =='*'){
+ mul(nbr1, nbr2);
+}else if (operation =='/'){
+div(nbr1, nbr2);
+}else{
+ per(nbr1, nbr2);
+}
+});
+<!-- ------------------------------------------------- -->
+//				addition function
+<!-- ------------------------------------------------- -->
+function add(nb1, nb2){
+var result = parseFloat(nb1)+ parseFloat(nb2);
+$('#output').val(result);
+}
+
+<!-- ------------------------------------------------- -->
+//				subtraction function
+<!-- ------------------------------------------------- -->
+function sub(nb1, nb2){
+var result = parseFloat(nb1)- parseFloat(nb2);
+$('#output').val(result);
+}
+
+<!-- ------------------------------------------------- -->
+//				multiplication function
+<!-- ------------------------------------------------- -->
+function mul(nb1, nb2){
+var result = parseFloat(nb1)* parseFloat(nb2);
+$('#output').val(result);
+}
+
+<!-- ------------------------------------------------- -->
+//				division function
+<!-- ------------------------------------------------- -->
+function div(nb1, nb2){
+var result='';
+ if (nb2 ==0){
+  result= "Math Error!! division by 0";
+ }else{
+ result = parseFloat(nb1)/parseFloat(nb2);
+ }
+$('#output').val(result);
+}
+
+<!-- ------------------------------------------------- -->
+//				percentage function
+<!-- ------------------------------------------------- -->
+function per(nb1, nb2){
+var tmp = parseFloat(nb1)/100;
+var result =tmp * parseFloat(nb2);
+$('#output').val(result);
+}
+
+
+});
+</script>
+</body>
+</html>
